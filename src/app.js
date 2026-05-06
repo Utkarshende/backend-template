@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import { errorHandler } from './middlewares/errorMiddleware.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -19,6 +20,9 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'OK', message: 'Backend Engine is Purring' });
 });
 
+app.use('/api/users', userRoutes);
+
 app.use(errorHandler);
+
 
 export default app;
