@@ -1,6 +1,7 @@
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
+import {sendSuccess} from '../utils/responseUtils.js';
 
 export const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
@@ -55,7 +56,8 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    res.json({
+    // Instead of res.json({ ... }), use the utility:
+    sendSuccess(res, 200, 'User profile fetched successfully', {
       _id: user._id,
       name: user.name,
       email: user.email,
